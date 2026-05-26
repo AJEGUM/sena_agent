@@ -1,0 +1,36 @@
+# .github/workflows/sena_agent.yml
+name: Agente SENA
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # todos los días a las 7am hora Colombia (UTC-5 = 12 UTC)
+    - cron: '0 18 * * *'   # y a la 1pm Colombia
+  workflow_dispatch:        # también se puede disparar manualmente desde GitHub
+
+jobs:
+  correr_agente:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Instalar Playwright
+        run: playwright install chromium
+
+      - name: Correr agente
+        env:
+          SENA_USER:        ${{ secrets.SENA_USER }}
+          SENA_PASS:        ${{ secrets.SENA_PASS }}
+          CLAUDE_API_KEY:   ${{ secrets.CLAUDE_API_KEY }}
+          CLAUDE_MODEL:     ${{ secrets.CLAUDE_MODEL }}
+          CLAUDE_MAX_TOKENS: ${{ secrets.CLAUDE_MAX_TOKENS }}
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
