@@ -66,7 +66,8 @@ async def obtener_cookies_frescas(user: str, password: str) -> dict:
         await asyncio.sleep(random.uniform(0.5, 1))
 
         print("Haciendo login...")
-        await page.click("#ini_session_aprendiz")
+        # no_wait_after=True evita que Playwright se congele esperando el evento de navegación por defecto
+        await page.click("#ini_session_aprendiz", no_wait_after=True)
 
         # Esperar redirección
         try:
