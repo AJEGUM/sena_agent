@@ -1,5 +1,5 @@
 # .github/workflows/sena_agent.yml
-name: Agente SENA
+name: SENA_Agent
 
 on:
   schedule:
