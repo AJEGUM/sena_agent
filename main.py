@@ -1,3 +1,4 @@
+# main.py
 import asyncio
 import logging
 import os
@@ -33,6 +34,7 @@ async def correr_agente():
         log.error(str(e))
         return
 
+    # Sin await — ejecutar_scraper ya no es async
     contenido = await ejecutar_scraper()
 
     if not contenido:

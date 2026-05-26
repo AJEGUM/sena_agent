@@ -3,16 +3,8 @@ from playwright.async_api import async_playwright
 
 async def diagnosticar_post_login():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=False,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--ignore-certificate-errors",
-                "--proxy-server=direct://",
-                "--proxy-bypass-list=*",
-            ]
-        )
+        browser = await p.firefox.launch(headless=False)
+        page = await browser.new_page()
 
         # Simular navegador real
         context = await browser.new_context(
@@ -27,7 +19,7 @@ async def diagnosticar_post_login():
         await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
         print("🔐 Haciendo login...")
-        await page.goto("https://149.130.180.117/sgva/SGVA_Diseno/pag/login.aspx", timeout=60000)
+        await page.goto("https://caprendizaje.sena.edu.co/sgva/SGVA_Diseno/pag/login.aspx", timeout=60000)
         await page.wait_for_load_state("networkidle")
         await asyncio.sleep(3)
         await page.click("text=Aprendices")
