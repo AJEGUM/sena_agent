@@ -1,0 +1,11 @@
+# Navegador automatizado — controla Chromium
+playwright==1.44.0
+
+# Cliente oficial de Claude
+anthropic==0.28.0
+
+# Peticiones HTTP — para Telegram
+requests==2.31.0
+
+# Lee el archivo .env
+python-dotenv==1.0.1
